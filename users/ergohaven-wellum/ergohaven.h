@@ -34,7 +34,7 @@
 
 enum custom_keycodes {
     NEXTSEN = QK_KB,
-    PREDL,
+    PREDL, 
     BRACES,
     PARENTH,
     ALT_TAB,
@@ -49,7 +49,6 @@ enum custom_keycodes {
 
     LAYER_NEXT,
     LAYER_PREV,
-    GM_INV,
 };
 
 // 1st layer on the cycle

@@ -4,8 +4,8 @@ SRC += swapper.c
 
 # Build Options
 
-NKRO_ENABLE = yes           # Enable N-Key Rollover
-BOOTMAGIC_ENABLE = yes      # Enable Bootmagic Lite
+NKRO_ENABLE = yes
+BOOTMAGIC_ENABLE = yes
 MOUSEKEY_ENABLE = yes
 EXTRAKEY_ENABLE = yes
 LTO_ENABLE = no

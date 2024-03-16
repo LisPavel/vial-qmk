@@ -1,5 +1,5 @@
 {
-    "name": "k:02",
+    "name": "K:02",
     "vendorId": "0x444D",
     "productId": "0x3636",
     "matrix": {
@@ -14,7 +14,7 @@
         {"name": "PREDL",
          "title": "Поставить точку и начать новое предложение с заглавной буквы (Русская раскладка)",
          "shortName": "PREDL"
-        },
+        }, 
         {"name": "BRACES",
          "title": "This keycode types [, then ], and taps the left arrow to position the cursor between the []. Or if shift is held, it does the same but with curly braces {}.",
          "shortName": "BRACES"
@@ -50,6 +50,14 @@
         {"name": "SW_TAB",
          "title": "SW_TAB",
          "shortName": "SW_TAB"
+        },
+        {"name": "LNEXT",
+         "title": "Switch to the next layer",
+         "shortName": "LNEXT"
+        },
+        {"name": "LPREV",
+         "title": "Switch to the previous layer",
+         "shortName": "LPREV"
         }
     ],
     "layouts": {

@@ -9,7 +9,7 @@ float caps_sound[][2] = SONG(CAPS_LOCK_ON_SOUND);
 #endif
 
 bool is_alt_tab_active = false;
-uint16_t alt_tab_timer = 0;
+uint16_t alt_tab_timer = 0;    
 
 bool is_oneshot_cancel_key(uint16_t keycode) {
     switch (keycode) {
@@ -44,19 +44,19 @@ oneshot_state os_ctrl_state = os_up_unqueued;
 oneshot_state os_alt_state = os_up_unqueued;
 oneshot_state os_cmd_state = os_up_unqueued;
 
-// custom keycodes
+// Custom keycodes
 __attribute__ ((weak))
 bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  #ifdef WPM_ENABLE
-    if (record->event.pressed) {
-        extern uint32_t tap_timer;
-        tap_timer = timer_read32();
-    }
-  #endif
+  // #ifdef WPM_ENABLE
+  //   if (record->event.pressed) {
+  //       extern uint32_t tap_timer;
+  //       tap_timer = timer_read32();
+  //   }
+  // #endif
       // added support for wellum
     update_swapper(
         &sw_win_active, KC_LALT, KC_TAB, SW_WIN, OS_SHFT,
@@ -104,7 +104,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         SEND_STRING(". ");
     #ifdef AUDIO_ENABLE
         PLAY_SONG(caps_sound);
-    #endif
+    #endif 
         add_oneshot_mods(MOD_BIT(KC_LSFT));  // Set one-shot mod for shift.
       }
       return false;
@@ -119,7 +119,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
 
-       case BRACES:
+    case BRACES:
             if (record->event.pressed) {
                 uint8_t shifted = get_mods() & (MOD_MASK_SHIFT);
                     if (shifted) {
@@ -139,64 +139,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code(KC_LEFT);
             }
           break;
-    #ifdef OLED_GAMING
-        case GM_INV:
-            // Toggle gaming mode & clear OLED display
-            if (!record->event.pressed) {
-                toggleGamingMode();
-                if (isGamingMode()) {
-                    readMainTimer();
-                    initGame();
-                    startGame();
-                }
-                oled_clear();
-            }
-            break;
-        case KC_S:
-            if (record->event.pressed) {
-                if (isGamingMode()) {
-                    movePlayer(1); // 1 = isLeft
-                    return false;
-                }
-            }
-            break;
-        case KC_F:
-            if (record->event.pressed) {
-                if (isGamingMode()) {
-                    movePlayer(0); // 0 = isRight
-                    return false;
-                }
-            }
-            break;
-        case KC_SPC:
-            if (record->event.pressed) {
-                if (isGamingMode()) {
-                    firePlayerBeam();
-                    return false;
-                }
-            }
-            break;
-        case KC_ENT:
-        case KC_LGUI:
-            if (record->event.pressed) {
-                if (isGamingMode()) {
-                    return false;
-                }
-            }
-            break;
-    #endif
 
     case KC_CAPS:
       if (record->event.pressed) {
     #ifdef AUDIO_ENABLE
         PLAY_SONG(caps_sound);
-    #endif
-        }
+    #endif 
+        }      
       return true; // Let QMK send the enter press/release events
-
+                  
     case LAYER_NEXT:
       // Our logic will happen on presses, nothing is done on releases
-      if (!record->event.pressed) {
+      if (!record->event.pressed) { 
         // We've already handled the keycode (doing nothing), let QMK know so no further code is run unnecessarily
         return false;
       }
@@ -217,7 +171,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     case LAYER_PREV:
       // Our logic will happen on presses, nothing is done on releases
-      if (!record->event.pressed) {
+      if (!record->event.pressed) { 
         // We've already handled the keycode (doing nothing), let QMK know so no further code is run unnecessarily
         return false;
       }
@@ -238,8 +192,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     default:
       return true; // Process all other keycodes normally
   }
-
-
    return process_record_keymap(keycode, record);
 }
 
@@ -252,36 +204,28 @@ void matrix_scan_user(void) { // The very important timer.
       is_alt_tab_active = false;
     }
   }
-  #ifdef OLED_GAMING
-    if (isGamingMode()) {
-        if (countMainTimer() > 0) {
-            game_main();
-        }
-    }
-  #endif
 }
 
 
-
-__attribute__ ((weak))
-layer_state_t layer_state_set_keymap (layer_state_t state) {
-  return state;
-}
+// __attribute__ ((weak))
+// layer_state_t layer_state_set_keymap (layer_state_t state) {
+//   return state;
+// }
 
 layer_state_t layer_state_set_user (layer_state_t state) {
-      #if defined(AUDIO_ENABLE)
-        static bool is_base_on = false;
-    if (layer_state_cmp(state, _MAIN) != is_base_on) {
-            is_base_on = layer_state_cmp(state, _MAIN);
-            if (is_base_on) {
-                stop_all_notes();
-            } else {
-                PLAY_SONG(base_sound);
-            }
-        }
-    #endif
-
+//       #if defined(AUDIO_ENABLE)
+//         static bool is_base_on = false;
+//     if (layer_state_cmp(state, _BASE) != is_base_on) {
+//             is_base_on = layer_state_cmp(state, _BASE);
+//             if (is_base_on) {
+//                 stop_all_notes();
+//             } else {
+//                 PLAY_SONG(base_sound);
+//             }
+//         }
+//     #endif
 //   return layer_state_set_keymap (state);
-
+//     }
   return update_tri_layer_state(state, _SYMB, _NAV, _NUMB);
 }
+
