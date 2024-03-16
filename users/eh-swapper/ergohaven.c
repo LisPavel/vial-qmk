@@ -1,7 +1,6 @@
 #include "ergohaven.h"
 #include "wellum.h"
 #include "swapper.h"
-#include "oneshot.h"
 
 #ifdef AUDIO_ENABLE
 float base_sound[][2] = SONG(TERMINAL_SOUND);
@@ -11,38 +10,9 @@ float caps_sound[][2] = SONG(CAPS_LOCK_ON_SOUND);
 bool is_alt_tab_active = false;
 uint16_t alt_tab_timer = 0;    
 
-bool is_oneshot_cancel_key(uint16_t keycode) {
-    switch (keycode) {
-    case LA_SYM:
-    case LA_NAV:
-        return true;
-    default:
-        return false;
-    }
-}
-
-bool is_oneshot_ignored_key(uint16_t keycode) {
-    switch (keycode) {
-    case LA_SYM:
-    case LA_NAV:
-    case KC_LSFT:
-    case OS_SHFT:
-    case OS_CTRL:
-    case OS_ALT:
-    case OS_CMD:
-        return true;
-    default:
-        return false;
-    }
-}
 
 bool sw_win_active = false;
 bool sw_tab_active = false;
-
-oneshot_state os_shft_state = os_up_unqueued;
-oneshot_state os_ctrl_state = os_up_unqueued;
-oneshot_state os_alt_state = os_up_unqueued;
-oneshot_state os_cmd_state = os_up_unqueued;
 
 // Custom keycodes
 __attribute__ ((weak))
@@ -59,31 +29,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   // #endif
       // added support for wellum
     update_swapper(
-        &sw_win_active, KC_LALT, KC_TAB, SW_WIN, OS_SHFT,
+        &sw_win_active, KC_LALT, KC_TAB, SW_WIN, KC_LSFT,
         keycode, record
     );
     update_swapper(
-        &sw_tab_active, KC_LCTL, KC_TAB, SW_TAB, OS_SHFT,
+        &sw_tab_active, KC_LCTL, KC_TAB, SW_TAB, KC_LSFT,
         keycode, record
     );
-
-    update_oneshot(
-        &os_shft_state, KC_LSFT, OS_SHFT,
-        keycode, record
-    );
-    update_oneshot(
-        &os_ctrl_state, KC_LCTL, OS_CTRL,
-        keycode, record
-    );
-    update_oneshot(
-        &os_alt_state, KC_LALT, OS_ALT,
-        keycode, record
-    );
-    update_oneshot(
-        &os_cmd_state, KC_LCMD, OS_CMD,
-        keycode, record
-    );
-
 
   switch (keycode) { // This will do most of the grunt work with the keycodes.
     case ALT_TAB:
@@ -204,7 +156,6 @@ void matrix_scan_user(void) { // The very important timer.
       is_alt_tab_active = false;
     }
   }
-}
 
 
 // __attribute__ ((weak))
@@ -212,7 +163,7 @@ void matrix_scan_user(void) { // The very important timer.
 //   return state;
 // }
 
-layer_state_t layer_state_set_user (layer_state_t state) {
+// layer_state_t layer_state_set_user (layer_state_t state) {
 //       #if defined(AUDIO_ENABLE)
 //         static bool is_base_on = false;
 //     if (layer_state_cmp(state, _BASE) != is_base_on) {
@@ -226,6 +177,5 @@ layer_state_t layer_state_set_user (layer_state_t state) {
 //     #endif
 //   return layer_state_set_keymap (state);
 //     }
-  return update_tri_layer_state(state, _SYMB, _NAV, _NUMB);
 }
 

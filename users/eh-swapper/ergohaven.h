@@ -39,11 +39,6 @@ enum custom_keycodes {
     PARENTH,
     ALT_TAB,
 
-    OS_SHFT,
-    OS_CTRL,
-    OS_ALT,
-    OS_CMD,
-
     SW_WIN,  // Switch to next window         (alt-tab)
     SW_TAB,  // Switch to next browser tab    (ctrl-tab)
 
