@@ -1,8 +1,8 @@
 #include QMK_KEYBOARD_H
 #include "ergohaven.h"
 // #include "oled/bongocat.c"
-// #include "oled/ergohaven_light.c"
-#include "oled/ergohaven_dark.c"
+#include "oled/ergohaven_light.c"
+// #include "oled/ergohaven_dark.c"
 // #include "font_block.h"
 // #include "game/game.h"
 // #include "layers.c"
@@ -59,7 +59,7 @@ void render_layer_state(void) {
     // Print current mode
     oled_write_ln_P(PSTR("K:02\n"), false);
     /* oled_write_P(PSTR("\n"), false); */
-    oled_write_ln_P(PSTR("v3.1\n"), false);
+    oled_write_ln_P(PSTR("v3.2\n"), false);
     oled_write_P(PSTR("\n"), false);
     oled_write_ln_P(PSTR("MODE\n"), false);
     if (keymap_config.swap_lctl_lgui) {
@@ -139,8 +139,8 @@ bool oled_task_user(void) {
     } else {
     // render_bongocat();  // bongocat
     // render_luna_status();  // luna
-        // ergohaven_light_draw();
-        ergohaven_dark_draw();
+        ergohaven_light_draw();
+        // ergohaven_dark_draw();
 }
     return false;
 }
