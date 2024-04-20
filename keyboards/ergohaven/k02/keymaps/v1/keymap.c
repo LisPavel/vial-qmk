@@ -1,8 +1,8 @@
 #include QMK_KEYBOARD_H
 #include "ergohaven.h"
 // #include "oled/bongocat.c"
-// #include "oled/ergohaven_light.c"
-#include "oled/ergohaven_dark.c"
+#include "oled/ergohaven_light.c"
+// #include "oled/ergohaven_dark.c"
 // #include "font_block.h"
 // #include "game/game.h"
 // #include "layers.c"
@@ -73,25 +73,25 @@ void render_layer_state(void) {
     oled_write_ln_P(PSTR("LAYER"), false);
     switch (get_highest_layer(layer_state)) {
         case _BASE:
-            oled_write_P(PSTR("Base\n"), false);
-            break;
-        case _RAISE:
-            oled_write_P(PSTR("Raise"), false);
+            oled_write_P(PSTR("Main\n"), false);
             break;
         case _LOWER:
-            oled_write_P(PSTR("Lower"), false);
+            oled_write_P(PSTR("Nav\n"), false);
+            break;
+        case _RAISE:
+            oled_write_P(PSTR("Symb\n"), false);
             break;
         case _ADJUST:
-            oled_write_P(PSTR("Adjst"), false);
+            oled_write_P(PSTR("Numb\n"), false);
             break;
         case _FOUR:
-            oled_write_P(PSTR("Four\n"), false);
+            oled_write_P(PSTR("Mouse"), false);
             break;
         case _FIVE:
-            oled_write_P(PSTR("Five\n"), false);
+            oled_write_P(PSTR("Game\n"), false);
             break;
         case _SIX:
-            oled_write_P(PSTR("Six\n"), false);
+            oled_write_P(PSTR("Game+"), false);
             break;
         case _SEVEN:
             oled_write_P(PSTR("Seven"), false);
@@ -139,8 +139,8 @@ bool oled_task_user(void) {
     } else {
     // render_bongocat();  // bongocat
     // render_luna_status();  // luna
-        // ergohaven_light_draw();
-        ergohaven_dark_draw();
+        ergohaven_light_draw();
+        // ergohaven_dark_draw();
 }
     return false;
 }
